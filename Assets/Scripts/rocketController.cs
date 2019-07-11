@@ -24,7 +24,7 @@ public class rocketController : MonoBehaviour
        Debug.Log(other.gameObject.name+"  "+ distance);
 
         // other.gameObject.tag == "wall" || other.gameObject.tag == "turret" || other.gameObject.tag == "plane"
-        if (!(other.gameObject.tag == "ammo"))
+        if (!(other.gameObject.CompareTag("ammo")))
         {
             Instantiate(firework, transform.position, Quaternion.identity);
             explosion.Play();

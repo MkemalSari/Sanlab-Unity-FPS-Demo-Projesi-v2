@@ -5,10 +5,12 @@ using UnityEngine;
 public class wallController : MonoBehaviour
 {
     // Start is called before the first frame update
-   public bool left;
+    public bool left;
     public bool right;
     public float rightMax;
     public float leftMax;
+    public float speed = 1f;
+    Movement m = new Movement();
     void Start()
     {
         
@@ -18,8 +20,9 @@ public class wallController : MonoBehaviour
     
     void Update()
     {
+        // m.movement(this.gameObject, rightMax, leftMax, left, right, speed);
 
-        if (transform.position.x>rightMax)
+        if (transform.position.x > rightMax)
         {
             left = true;
             right = false;
@@ -32,15 +35,13 @@ public class wallController : MonoBehaviour
 
         if (left)
         {
-            transform.Translate(new Vector3(-0.1f, 0, 0));
+            transform.Translate(new Vector3(-0.1f * speed, 0, 0));
         }
         if (right)
         {
-            transform.Translate(new Vector3(0.1f, 0, 0));
+            transform.Translate(new Vector3(0.1f * speed, 0, 0));
         }
-
     }
-    
 
     
 

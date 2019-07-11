@@ -12,12 +12,18 @@ public class turretsController : MonoBehaviour
     public GameObject turretFire;
     public GameObject TurrentAmmo;
     float sec = 0;
-    
+     public bool toMove;
+    public bool left;
+    public bool right;
+    public float rightMax;
+    public float leftMax;
+    public float speed = 1f;
+    Rigidbody rb;
 
 
     void Start()
     {
-       
+        rb = gameObject.GetComponent<Rigidbody>();
     }
     private void FixedUpdate()
     {
@@ -43,7 +49,38 @@ public class turretsController : MonoBehaviour
             Destroy(bullet, 5f);
             sec = 0;
         }
-       
+
+
+        if (toMove)
+        {
+            if (transform.position.x > rightMax)
+            {
+                rb.velocity = Vector3.zero;
+                left = true;
+                right = false;
+            }
+            if (transform.position.x < leftMax)
+            {
+                rb.velocity = Vector3.zero;
+                left = false;
+                right = true;
+            }
+
+            if (left)
+            {
+                rb.AddForce(transform.right * -5f);
+                // transform.Translate(new Vector3(-0.1f * speed, 0, 0));
+
+            }
+            if (right)
+            {
+                rb.AddForce(transform.right * 5f);
+               // transform.Translate(new Vector3(0.1f * speed, 0, 0));
+            }
+
+
+        }
+
 
 
     }
