@@ -6,43 +6,26 @@ using UnityEngine.UI;
 public class charcterController : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject ammo;
-    public Text ammoCountText;
-    int ammoCount=10;
-    int rocketCount = 5;
-    public GameObject rocket;
-    public GameObject gun;
-    public Text healthText;
-     int health=100;
+
+    public int health=100;
     int gunSelect = 1;
-    public GameObject gun1;
-    public GameObject gun2;
-    public GameObject gun3;
-    public float spreadAngel=5f;
-    public int spreadCount=20;
-    public float bulletVel = 5f;
-    public AudioSource shotGunSound;
-    public AudioSource RocketSound;
-    public AudioSource LaserSound;
     public LineRenderer line;
-
+    public GameObject[] guns;
     float sec = 0;
-
+    public ShotGun shotGun;
+    public RocketLauncher rocketLauncher;
+    public Laser laser;
+    
     void Start()
     {
-       
+        shotGun = guns[0].GetComponent<ShotGun>();
+        laser= guns[1].GetComponent<Laser>();
+        rocketLauncher = guns[2].GetComponent<RocketLauncher>();
+
     }
     private void FixedUpdate()
     {
-        if (gunSelect==1)
-        {
-            ammoCountText.text = "10/" + ammoCount + "";
-        }
-        else if (gunSelect==3)
-        {
-            ammoCountText.text = "5/" + rocketCount + "";
-        }
-        healthText.text = "" + health + "";
+       
     }
 
     // Update is called once per frame
@@ -51,13 +34,11 @@ public class charcterController : MonoBehaviour
 
         if (gunSelect==2)
         {
-            Vector3 pos = gun.transform.TransformDirection(gun.transform.position);
+            Vector3 pos = shotGun.burrel.transform.TransformDirection(shotGun.burrel.transform.position);
             
                     line.SetPosition(0, pos);
-                    line.SetPosition(1, pos+gun.transform.forward*20);
-              
-
-            
+                    line.SetPosition(1, pos+ shotGun.burrel.transform.forward*20);
+                
         }
 
 
@@ -67,8 +48,13 @@ public class charcterController : MonoBehaviour
         {
             if (sec>0.25f)
             {
+                if (gunSelect==1)
+                {
+
+                    Fire();
+                }
                 sec = 0;
-                fire();
+                Fire();
 
             }
 
@@ -76,103 +62,62 @@ public class charcterController : MonoBehaviour
         //Gun Select
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            gun1.gameObject.SetActive(true);
-            gun2.gameObject.SetActive(false);
-            gun3.gameObject.SetActive(false);
+            AllDeactiveGuns();
+            guns[0].gameObject.SetActive(true);
             gunSelect = 1;
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            gun1.gameObject.SetActive(false);
-            gun2.gameObject.SetActive(true);
-            gun3.gameObject.SetActive(false);
+            AllDeactiveGuns();
+            guns[1].gameObject.SetActive(true);
             gunSelect = 2;
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            gun1.gameObject.SetActive(false);
-            gun2.gameObject.SetActive(false);
-            gun3.gameObject.SetActive(true);
+            AllDeactiveGuns();
+            guns[2].gameObject.SetActive(true);
             gunSelect = 3;
         }
 
         
 
     }
-    
-    void fire()
-    {
-
-        if (gunSelect==1)
-        {
-            if (ammoCount>0)
-            {
-
-            
-            //ShotGun Fire
-            ammoCount--;
-            shotGunSound.Play();
-            for (int i = 0; i < 20; i++)
-            {
-                
-                GameObject bullet = (GameObject)Instantiate(ammo,gun.transform.position, gun.transform.rotation) as GameObject;
-                bullet.transform.rotation = Quaternion.RotateTowards(bullet.transform.rotation, Random.rotation, spreadAngel);
-                bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * bulletVel);
-                Destroy(bullet, 5f);
-            }
-
-            }
-        }
-
-        if (gunSelect == 2)
-        {
-            //Laser Fire
-            
-           
+    void AllDeactiveGuns() { //all guns Deactive
+        guns[0].gameObject.SetActive(false);
+        guns[1].gameObject.SetActive(false);
+        guns[2].gameObject.SetActive(false);
+    }
+    void Fire()
+    {      //Guns Fire Control
+        if (gunSelect==1) shotGun.Shot(); //Shotgun Fire
+        if (gunSelect == 2) { }
+        if (gunSelect == 3) rocketLauncher.Shot(); //Rocket Fire
+    }
 
 
-        }
-        if (gunSelect == 3)
-        {
-            //Rocket Fire
-            if (rocketCount>0)
-            {
-
-            
-            rocketCount--;
-            RocketSound.Play();
-            GameObject bullet = (GameObject)Instantiate(rocket, gun.transform.position, gun.transform.rotation) as GameObject;
-            bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * bulletVel);
-            Destroy(bullet, 5f);
-
-            }
-
-        }
-
-
-
-
+    public int GetGunSelect() { 
+        return gunSelect;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        
+        //Collect AmmoBox
         if (other.gameObject.CompareTag("ammoBox"))
         {
             Destroy(other.gameObject);
-            ammoCount+=5;
-            rocketCount += 2;
-            if (rocketCount>5)
+            shotGun.ammoCount+=5;
+            rocketLauncher.ammoCount += 2;
+            if (rocketLauncher.ammoCount > 5)
             {
-                rocketCount = 5;
+                rocketLauncher.ammoCount = 5;
             }
-            if (ammoCount>10)
+            if (shotGun.ammoCount > 10)
             {
-                ammoCount = 10;
+                shotGun.ammoCount = 10;
             }
            ;
         }
-
+        
         if (other.gameObject.CompareTag("ammo"))
         {
             Destroy(other.gameObject);

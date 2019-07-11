@@ -7,7 +7,7 @@ public class turretsController : MonoBehaviour
 {
     // Start is called before the first frame update
     public Transform target;
-     int health = 100;
+    public int health = 100;
     public TextMesh text;
     public GameObject turretFire;
     public GameObject TurrentAmmo;

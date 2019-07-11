@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class rocketController : MonoBehaviour
+public class RocketExplosion : MonoBehaviour
 {
     public GameObject firework;
     AudioSource explosion;
