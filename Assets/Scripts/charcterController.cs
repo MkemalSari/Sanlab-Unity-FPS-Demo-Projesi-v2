@@ -51,22 +51,13 @@ public class charcterController : MonoBehaviour
 
         if (gunSelect==2)
         {
-            RaycastHit hit;
-            if (Physics.Raycast(gun.transform.position, gun.transform.forward, out hit))
-            {
-                if (hit.collider)
-                {
-                    line.SetPosition(0, gun.transform.position);
-                    line.SetPosition(1, hit.point);
-                }
-                else
-                {
-                    line.SetPosition(0, gun.transform.position);
-                    line.SetPosition(1, gun.transform.forward * 5000);
-                }
+            Vector3 pos = gun.transform.TransformDirection(gun.transform.position);
+            
+                    line.SetPosition(0, pos);
+                    line.SetPosition(1, pos+gun.transform.forward*20);
+              
 
-
-            }
+            
         }
 
 
@@ -166,7 +157,7 @@ public class charcterController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         
-        if (other.gameObject.tag == "ammoBox")
+        if (other.gameObject.CompareTag("ammoBox"))
         {
             Destroy(other.gameObject);
             ammoCount+=5;
@@ -182,7 +173,7 @@ public class charcterController : MonoBehaviour
            ;
         }
 
-        if (other.gameObject.tag == "ammo")
+        if (other.gameObject.CompareTag("ammo"))
         {
             Destroy(other.gameObject);
             health -= 10;

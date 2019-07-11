@@ -7,7 +7,7 @@ public class turretsController : MonoBehaviour
 {
     // Start is called before the first frame update
     public Transform target;
-     float health = 100;
+     int health = 100;
     public TextMesh text;
     public GameObject turretFire;
     public GameObject TurrentAmmo;
@@ -18,17 +18,20 @@ public class turretsController : MonoBehaviour
     public float rightMax;
     public float leftMax;
     public float speed = 1f;
-    Rigidbody rb;
+    bool isBoom;
+    
 
 
     void Start()
     {
-        rb = gameObject.GetComponent<Rigidbody>();
     }
     private void FixedUpdate()
     {
         text.text = health.ToString();
-
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
 
     }
    
@@ -51,43 +54,24 @@ public class turretsController : MonoBehaviour
         }
 
 
-        if (toMove)
-        {
-            if (transform.position.x > rightMax)
-            {
-                rb.velocity = Vector3.zero;
-                left = true;
-                right = false;
-            }
-            if (transform.position.x < leftMax)
-            {
-                rb.velocity = Vector3.zero;
-                left = false;
-                right = true;
-            }
-
-            if (left)
-            {
-                rb.AddForce(transform.right * -5f);
-                // transform.Translate(new Vector3(-0.1f * speed, 0, 0));
-
-            }
-            if (right)
-            {
-                rb.AddForce(transform.right * 5f);
-               // transform.Translate(new Vector3(0.1f * speed, 0, 0));
-            }
+  
+        
+    }
 
 
-        }
+   public void explosion(int dist) {
 
-
+        health -= (100/dist);
+        
+        
 
     }
+    
     private void OnTriggerEnter(Collider other)
     {
         
-        if (other.gameObject.tag == "ammo")
+
+        if (other.gameObject.CompareTag("ammo"))
         {
             Destroy(other.gameObject);
             health -= 20;
@@ -97,16 +81,17 @@ public class turretsController : MonoBehaviour
             }
         }
 
-        if (other.gameObject.tag == "rocket")
+        if (other.gameObject.CompareTag("rocket"))
         {
+            
+
+
             Destroy(other.gameObject);
             health -= 50;
-            if (health <= 0)
-            {
-                Destroy(gameObject);
-            }
+            
           
         }
     }
-   
 }
+   
+

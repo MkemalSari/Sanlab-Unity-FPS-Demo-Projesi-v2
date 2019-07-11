@@ -10,7 +10,6 @@ public class wallController : MonoBehaviour
     public float rightMax;
     public float leftMax;
     public float speed = 1f;
-    Movement m = new Movement();
     void Start()
     {
         

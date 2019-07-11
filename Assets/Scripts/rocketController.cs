@@ -6,9 +6,11 @@ public class rocketController : MonoBehaviour
 {
     public GameObject firework;
     AudioSource explosion;
+    
     // Start is called before the first frame update
     void Start()
     {
+        
         explosion = GetComponent<AudioSource>();
     }
 
@@ -21,14 +23,36 @@ public class rocketController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
        float distance= Vector3.Distance(transform.position, other.transform.position);
-       Debug.Log(other.gameObject.name+"  "+ distance);
+      // Debug.Log(other.gameObject.name+"  "+ distance);
 
         // other.gameObject.tag == "wall" || other.gameObject.tag == "turret" || other.gameObject.tag == "plane"
         if (!(other.gameObject.CompareTag("ammo")))
         {
             Instantiate(firework, transform.position, Quaternion.identity);
             explosion.Play();
+            Collider[] nearbyobject = Physics.OverlapSphere(transform.position, 10f);
+
+            foreach (var item in nearbyobject)
+            {
+
+                if (item.CompareTag("turret"))
+                {
+                    
+                    var dist = Vector3.Distance(item.transform.position, transform.position);
+                    Debug.Log(dist);
+                    //  item.gameObject.SendMessage("explosion");
+                    turretsController tCt = item.GetComponent<turretsController>();
+                    if (tCt != null)
+                    {
+                        tCt.explosion((int)dist); 
+                    }
+                   // item.gameObject.SendMessage("explosion", dist);
+                    //SendMessage
+                }
+            }
+            Destroy(gameObject);
         }
+
 
         if (distance<=0.5f)
         {
@@ -44,7 +68,7 @@ public class rocketController : MonoBehaviour
         }
 
 
-        // Debug.Log("güm");
-
     }
+   
+
 }
