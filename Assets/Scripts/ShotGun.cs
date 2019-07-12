@@ -28,9 +28,9 @@ public class ShotGun :Guns
     public void Shot()
     {
 
-        if (ammoCapacity > 0)
+        if (ammoCount > 0)
         {
-            ammoCapacity--;
+            ammoCount--;
             GunShotSound.Play();
             for (int i = 0; i < spreadCount; i++)
             {

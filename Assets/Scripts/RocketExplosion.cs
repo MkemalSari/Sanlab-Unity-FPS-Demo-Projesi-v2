@@ -6,11 +6,12 @@ public class RocketExplosion : MonoBehaviour
 {
     public GameObject firework;
     AudioSource explosion;
-    
+
     // Start is called before the first frame update
+    //RocketLauncher rocketLauncher;
     void Start()
     {
-        
+       // rocketLauncher = GetComponent<RocketLauncher>();
         explosion = GetComponent<AudioSource>();
     }
 
@@ -30,7 +31,7 @@ public class RocketExplosion : MonoBehaviour
         {
             Instantiate(firework, transform.position, Quaternion.identity);
             explosion.Play();
-            Collider[] nearbyobject = Physics.OverlapSphere(transform.position, 10f);
+            Collider[] nearbyobject = Physics.OverlapSphere(transform.position, RocketLauncher.ExplosionArea);
 
             foreach (var item in nearbyobject)
             {
@@ -41,7 +42,7 @@ public class RocketExplosion : MonoBehaviour
                     var dist = Vector3.Distance(item.transform.position, transform.position);
                     Debug.Log(dist);
                     //  item.gameObject.SendMessage("explosion");
-                    turretsController tCt = item.GetComponent<turretsController>();
+                    TurretsController tCt = item.GetComponent<TurretsController>();
                     if (tCt != null)
                     {
                         tCt.explosion((int)dist); 

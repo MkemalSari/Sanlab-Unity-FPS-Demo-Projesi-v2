@@ -8,16 +8,19 @@ public class charcterController : MonoBehaviour
     // Start is called before the first frame update
 
     public int health=100;
-    int gunSelect = 1;
+    public int gunSelect = 1;
     public LineRenderer line;
     public GameObject[] guns;
     float sec = 0;
     public ShotGun shotGun;
     public RocketLauncher rocketLauncher;
     public Laser laser;
-    
+    public Text ammoCountText;
+    public Text healthText;
+
     void Start()
     {
+       
         shotGun = guns[0].GetComponent<ShotGun>();
         laser= guns[1].GetComponent<Laser>();
         rocketLauncher = guns[2].GetComponent<RocketLauncher>();
@@ -25,7 +28,15 @@ public class charcterController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-       
+        if (gunSelect == 1)
+        {
+            ammoCountText.text = "10/" + shotGun.ammoCount + "";
+        }
+        else if (gunSelect == 3)
+        {
+            ammoCountText.text = "5/" + rocketLauncher.ammoCount + "";
+        }
+        healthText.text = "" + health + "";
     }
 
     // Update is called once per frame
@@ -48,13 +59,8 @@ public class charcterController : MonoBehaviour
         {
             if (sec>0.25f)
             {
-                if (gunSelect==1)
-                {
-
-                    Fire();
-                }
-                sec = 0;
                 Fire();
+                sec = 0;
 
             }
 
@@ -95,9 +101,6 @@ public class charcterController : MonoBehaviour
     }
 
 
-    public int GetGunSelect() { 
-        return gunSelect;
-    }
 
     private void OnTriggerEnter(Collider other)
     {

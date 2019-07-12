@@ -8,7 +8,7 @@ public class Guns : MonoBehaviour
     public int damage; //bullet damage of weapon
     public GameObject bulletPrefab;//need bullet model
     public int ammoCapacity; //have ammo capacity
-    public int ammoCount;
+    public int ammoCount; //have ammo Count
     public bool canFire=true; //
     public AudioSource GunShotSound; //
     public float bulletVelocity;

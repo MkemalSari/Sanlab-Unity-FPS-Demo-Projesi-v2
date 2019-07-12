@@ -5,7 +5,7 @@ using UnityEngine;
 public class RocketLauncher : Guns
 {
     // Start is called before the first frame update
-    public float ExplosionArea=10f;
+    public static float ExplosionArea=10f;
     void Start()
     {
         
@@ -20,9 +20,9 @@ public class RocketLauncher : Guns
     public void Shot()
     {
 
-        if (ammoCapacity > 0)
+        if (ammoCount > 0)
         {
-            ammoCapacity--;
+            ammoCount--;
             GunShotSound.Play();
            
                 GameObject bullet = (GameObject)Instantiate(bulletPrefab, burrel.transform.position, burrel.transform.rotation) as GameObject;
