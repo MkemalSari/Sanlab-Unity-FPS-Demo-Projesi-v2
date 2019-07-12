@@ -27,15 +27,9 @@ public class TurretsController : Enemies
         healthText.text = health.ToString();
     }
 
-    public void explosion(int dist) {
+   
 
-        health -= (100/dist);
-        if (health<=0)
-        {
-            Destroy(gameObject);
-        }
-
-    }
+    
     private void OnTriggerEnter(Collider other)
     {
         
