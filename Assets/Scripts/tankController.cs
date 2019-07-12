@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class tankController : MonoBehaviour
+public class tankController : Enemies
 {
-    // Start is called before the first frame update
+    
     void Start()
     {
         

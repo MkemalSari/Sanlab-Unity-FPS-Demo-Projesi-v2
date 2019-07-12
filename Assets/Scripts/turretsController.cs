@@ -22,14 +22,20 @@ public class TurretsController : Enemies
         }
 
     }
+    private void FixedUpdate()
+    {
+        healthText.text = health.ToString();
+    }
 
-
-   public void explosion(int dist) {
+    public void explosion(int dist) {
 
         health -= (100/dist);
+        if (health<=0)
+        {
+            Destroy(gameObject);
+        }
 
     }
-    
     private void OnTriggerEnter(Collider other)
     {
         

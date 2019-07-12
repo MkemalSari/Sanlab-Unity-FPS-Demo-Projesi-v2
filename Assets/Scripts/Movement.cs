@@ -5,39 +5,65 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     // Start is called before the first frame update
+    public bool horizontal;
+    public bool vertical;
+    public bool left;
+    public bool right;
+    public float rightMax;
+    public float leftMax;
     void Start()
     {
-        
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-    }
+        if (horizontal)
+        {
+            if (transform.position.x > rightMax)
+            {
+                left = true;
+                right = false;
+            }
+            if (transform.position.x < leftMax)
+            {
+                left = false;
+                right = true;
+            }
 
-    //Movement
-  public void movement(GameObject obje, float rightMax, float leftMax, bool left, bool right,float speed=1)
-    {
+            if (left)
+            {
 
-        if (obje.transform.position.x > rightMax)
-        {
-            left = true;
-            right = false;
-        }
-        if (obje.transform.position.x < leftMax)
-        {
-            left = false;
-            right = true;
+                transform.Translate(new Vector3(-0.1f, 0, 0));
+            }
+            if (right)
+            {
+                transform.Translate(new Vector3(0.1f, 0, 0));
+            }
         }
 
-        if (left)
+        if (vertical)
         {
-            obje.transform.Translate(new Vector3(-0.1f * speed, 0, 0));
-        }
-        if (right)
-        {
-            obje.transform.Translate(new Vector3(0.1f * speed, 0, 0));
+            if (transform.position.z > rightMax)
+            {
+                left = true;
+                right = false;
+            }
+            if (transform.position.z < leftMax)
+            {
+                left = false;
+                right = true;
+            }
+
+            if (left)
+            {
+                transform.Translate(new Vector3(0, 0, -0.1f));
+            }
+            if (right)
+            {
+                transform.Translate(new Vector3(0, 0, 0.1f));
+            }
         }
 
     }
