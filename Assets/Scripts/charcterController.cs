@@ -17,17 +17,23 @@ public class charcterController : MonoBehaviour
     public Laser laser;
     public Text ammoCountText;
     public Text healthText;
+    public RectTransform healthBar;
+    public AudioClip[] hurtsSounds;
+    AudioSource audioSource;
 
     void Start()
     {
-       
+        
+        audioSource = GetComponent<AudioSource>();
         shotGun = guns[0].GetComponent<ShotGun>();
         laser= guns[1].GetComponent<Laser>();
         rocketLauncher = guns[2].GetComponent<RocketLauncher>();
+        
 
     }
     private void FixedUpdate()
     {
+       
         if (gunSelect == 1)
         {
             ammoCountText.text = "10/" + shotGun.ammoCount + "";
@@ -43,14 +49,7 @@ public class charcterController : MonoBehaviour
     void Update()
     {
 
-        if (gunSelect==2)
-        {
-            Vector3 pos = shotGun.burrel.transform.TransformDirection(shotGun.burrel.transform.position);
-            
-                    line.SetPosition(0, pos);
-                    line.SetPosition(1, pos+ shotGun.burrel.transform.forward*20);
-                
-        }
+      
 
 
         sec += Time.deltaTime;
@@ -96,18 +95,31 @@ public class charcterController : MonoBehaviour
     void Fire()
     {      //Guns Fire Control
         if (gunSelect==1) shotGun.Shot(); //Shotgun Fire
-        if (gunSelect == 2) { }
+        if (gunSelect == 2) { laser.FireLaser(); }
         if (gunSelect == 3) rocketLauncher.Shot(); //Rocket Fire
     }
 
 
+    void HealthBarSetup()
+    {
+        float minHealth = -(healthBar.rect.width-20);//HealthBar distance;
+        healthBar.position += healthBar.right * minHealth/10; //every time you receive damage change position healtbar
+        healthBar.GetComponent<Image>().color = Color.Lerp(healthBar.GetComponent<Image>().color, Color.red,0.2f);// every time you receive damage change HealtBar Color
+    }
+
+    public void HurtsSoundRandom() { //Select Random Hurts Sounds
+       audioSource.clip= hurtsSounds[Random.Range(0, hurtsSounds.Length)];
+
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         //Collect AmmoBox
         if (other.gameObject.CompareTag("ammoBox"))
         {
-            Destroy(other.gameObject);
+            other.gameObject.GetComponent<AudioSource>().Play();
+            other.gameObject.transform.position = new Vector3(1000, 1000, 1000);
+            Destroy(other.gameObject,2f);
             shotGun.ammoCount+=5;
             rocketLauncher.ammoCount += 2;
             if (rocketLauncher.ammoCount > 5)
@@ -123,8 +135,11 @@ public class charcterController : MonoBehaviour
         
         if (other.gameObject.CompareTag("ammo"))
         {
+            HurtsSoundRandom();
+            audioSource.Play();
             Destroy(other.gameObject);
             health -= 10;
+            HealthBarSetup();
             if (health <= 0)
             {
                 Debug.Log("Death");

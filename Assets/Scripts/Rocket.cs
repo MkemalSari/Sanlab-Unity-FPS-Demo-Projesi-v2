@@ -5,14 +5,14 @@ using UnityEngine;
 public class Rocket : MonoBehaviour
 {
     public GameObject firework;
-    AudioSource explosion;
+  //  AudioSource explosion;
 
     // Start is called before the first frame update
     //RocketLauncher rocketLauncher;
     void Start()
     {
        // rocketLauncher = GetComponent<RocketLauncher>();
-        explosion = GetComponent<AudioSource>();
+      //  explosion = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -30,12 +30,21 @@ public class Rocket : MonoBehaviour
         if (!(other.gameObject.CompareTag("ammo")))
         {
             Instantiate(firework, transform.position, Quaternion.identity);
-            explosion.Play(); //Explosion effect Play
-            Destroy(explosion, 5f);//Delete Explosion effect
+          //  explosion.Play(); //Explosion effect Play
+          //  Destroy(explosion, 5f);//Delete Explosion sound
             Collider[] nearbyobject = Physics.OverlapSphere(transform.position, RocketLauncher.ExplosionArea);
 
             foreach (var item in nearbyobject)
             {
+                if (item.CompareTag("brick"))
+                {
+
+                    item.GetComponent<Rigidbody>().AddExplosionForce(300f, transform.position, 5f);
+                }
+
+
+
+
 
                 if (item.CompareTag("turret"))
                 {
@@ -44,11 +53,16 @@ public class Rocket : MonoBehaviour
                     Debug.Log(dist);
                  
                     TurretsController tCt = item.GetComponent<TurretsController>();
+                    TankController tankC = item.GetComponent<TankController>();
                     if (tCt != null)
                     {
                         tCt.explosion((int)dist); 
                     }
-                
+                    if (tankC != null)
+                    {
+                        tankC.explosion((int)dist);
+                    }
+
                 }
             }
             Destroy(gameObject);

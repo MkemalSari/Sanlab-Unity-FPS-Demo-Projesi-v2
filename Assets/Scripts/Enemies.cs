@@ -12,6 +12,10 @@ public class Enemies : MonoBehaviour
     public GameObject enemiesBullet;
     public GameObject burrel;
     public float fireSpeed;
+    
+
+ 
+
     void Start()
     {
 
@@ -28,20 +32,32 @@ public class Enemies : MonoBehaviour
     }
     public void EnemiesFire()
     {
-        GameObject bullet = (GameObject)Instantiate(enemiesBullet, burrel.transform.position, burrel.transform.rotation) as GameObject;
-        bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * fireSpeed);
-        Destroy(bullet, 5f);
+        RaycastHit hit;
+
+        if (Physics.Raycast(burrel.transform.position, burrel.transform.forward, out hit, 100f))
+        {
+
+            if (hit.transform.gameObject.CompareTag("Player"))
+            {
+                GameObject bullet = (GameObject)Instantiate(enemiesBullet, burrel.transform.position, burrel.transform.rotation) as GameObject;
+                bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * fireSpeed);
+                Destroy(bullet, 5f);
+            }
+        }
+    }
+    public void TakeDamage(int damage) {
+        health -= damage;
+        Die();
 
     }
-    void Update()
-    {
-
-    }
-
     public void explosion(int dist)
     {
 
         health -= (100 / dist);
+        Die();
+    }
+    public void Die() {
+
         if (health <= 0)
         {
             Destroy(gameObject);

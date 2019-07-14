@@ -42,6 +42,7 @@ public class TankController : Enemies
                 float distance = Vector3.Distance(target.transform.position, transform.position);
         if (distance > 10f)
         {// look Smooting Movement;
+                    transform.position = new Vector3(transform.position.x, 3.34f, transform.position.z);
           transform.position = Vector3.SmoothDamp(transform.position, target.transform.position,ref velocity,3f,moveSpeed);
                     //transform.Translate(Vector3.forward * moveSpeed);
                 }

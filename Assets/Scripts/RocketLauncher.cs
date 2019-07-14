@@ -23,11 +23,11 @@ public class RocketLauncher : Guns
         if (ammoCount > 0)
         {
             ammoCount--;
-            GunShotSound.Play();
-           
+          
                 GameObject bullet = (GameObject)Instantiate(bulletPrefab, burrel.transform.position, burrel.transform.rotation) as GameObject;
                 bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * bulletVelocity);
-                Destroy(bullet, 5f);
+          
+            Destroy(bullet, 5f);
            
             
         }
