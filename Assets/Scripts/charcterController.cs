@@ -28,7 +28,8 @@ public class charcterController : MonoBehaviour
         shotGun = guns[0].GetComponent<ShotGun>();
         laser= guns[1].GetComponent<Laser>();
         rocketLauncher = guns[2].GetComponent<RocketLauncher>();
-        
+        StartCoroutine(RechargeLaser());
+
 
     }
     private void FixedUpdate()
@@ -36,13 +37,34 @@ public class charcterController : MonoBehaviour
        
         if (gunSelect == 1)
         {
-            ammoCountText.text = "10/" + shotGun.ammoCount + "";
+            GunsImageDeactive();
+            shotGun.gunsImage.gameObject.SetActive(true);
+            ammoCountText.text = shotGun.ammoCapacity+"/" + shotGun.ammoCount + "";
         }
         else if (gunSelect == 3)
         {
-            ammoCountText.text = "5/" + rocketLauncher.ammoCount + "";
+            GunsImageDeactive();
+            rocketLauncher.gunsImage.gameObject.SetActive(true);
+            ammoCountText.text = rocketLauncher.ammoCapacity+"/" + rocketLauncher.ammoCount + "";
+        }
+        else if (gunSelect == 2)
+        {
+            GunsImageDeactive();
+            laser.gunsImage.gameObject.SetActive(true);
+            ammoCountText.text = laser.ammoCapacity+"/" + laser.ammoCount + "";
         }
         healthText.text = "" + health + "";
+    }
+
+
+
+
+    public void GunsImageDeactive() {
+
+        shotGun.gunsImage.gameObject.SetActive(false);
+        laser.gunsImage.gameObject.SetActive(false);
+        rocketLauncher.gunsImage.gameObject.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -153,10 +175,10 @@ public class charcterController : MonoBehaviour
             }
            ;
         }
-        
+        //Setup HealhtBox
         //if (other.gameObject.CompareTag("ammo"))
         //{
-           
+
         //    Destroy(other.gameObject);
         //    health -= 10;
         //    HealthBarSetup();
@@ -167,5 +189,42 @@ public class charcterController : MonoBehaviour
 
 
         //}
+
+        if (other.gameObject.CompareTag("water"))
+        {
+            other.gameObject.GetComponent<AudioSource>().Play();
+            TakeDamage(20);
+          
+        }
+    }
+
+    IEnumerator Second() {
+
+        yield return new WaitForSeconds(1f);
+
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("water"))
+        {
+            other.gameObject.GetComponent<AudioSource>().Stop();
+           // TakeDamage(10);
+
+        }
+    }
+
+
+    IEnumerator RechargeLaser()
+    {
+
+        yield return new WaitForSeconds(0.5f);
+
+        if (laser.ammoCount < laser.ammoCapacity)
+        {
+            laser.ammoCount++;
+        }
+        StartCoroutine(RechargeLaser());
+
+
     }
 }

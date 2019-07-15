@@ -5,21 +5,7 @@ using UnityEngine;
 public class Rocket : MonoBehaviour
 {
     public GameObject firework;
-  //  AudioSource explosion;
 
-    // Start is called before the first frame update
-    //RocketLauncher rocketLauncher;
-    void Start()
-    {
-       // rocketLauncher = GetComponent<RocketLauncher>();
-      //  explosion = GetComponent<AudioSource>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter(Collider other)
     {

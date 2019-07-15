@@ -6,9 +6,10 @@ public class RocketLauncher : Guns
 {
     // Start is called before the first frame update
     public static float ExplosionArea=10f;
+
     void Start()
     {
-        
+       
     }
 
     // Update is called once per frame
@@ -25,7 +26,7 @@ public class RocketLauncher : Guns
             ammoCount--;
           
                 GameObject bullet = (GameObject)Instantiate(bulletPrefab, burrel.transform.position, burrel.transform.rotation) as GameObject;
-                bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * bulletVelocity);
+                bullet.GetComponent<Rigidbody>().AddForce(burrel.transform.forward * bulletVelocity);
           
             Destroy(bullet, 5f);
            

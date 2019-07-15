@@ -8,7 +8,7 @@ public class Enemies : MonoBehaviour
     public int scoreValue = 10;
     public int health;
     public float fireRate;
-    public TextMesh healthText;
+    public Text healthText;
     public GameObject target;
     public GameObject enemiesBullet;
     public GameObject burrel;

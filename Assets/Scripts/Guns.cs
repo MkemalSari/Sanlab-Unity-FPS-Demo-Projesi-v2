@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 public class Guns : MonoBehaviour
 {
 
@@ -13,12 +15,13 @@ public class Guns : MonoBehaviour
     public AudioSource GunShotSound; //
     public float bulletVelocity;
     public GameObject burrel;
+    public RawImage gunsImage;
 
    
     // Start is called before the first frame update
     void Start()
     {
-       
+      
         
     }
    
