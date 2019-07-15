@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Laser : MonoBehaviour
+public class Laser : Guns
 {
     public LineRenderer line;
     public Camera cameraFoward;
@@ -42,6 +42,7 @@ public class Laser : MonoBehaviour
         Ray ray = cameraFoward.ScreenPointToRay(new Vector3(x, y, 0));
         if (Physics.Raycast(ray.origin, ray.direction, out hit, 500f))
         {
+            GunShotSound.Play();
             if (hit.collider && !hit.collider.CompareTag("ammo"))
             {
                 if (hit.collider.GetComponent<Enemies>()) 

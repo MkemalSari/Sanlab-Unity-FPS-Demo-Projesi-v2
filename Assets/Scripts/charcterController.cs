@@ -103,15 +103,36 @@ public class charcterController : MonoBehaviour
     void HealthBarSetup()
     {
         float minHealth = -(healthBar.rect.width-20);//HealthBar distance;
-        healthBar.position += healthBar.right * minHealth/10; //every time you receive damage change position healtbar
+        healthBar.position += healthBar.right * minHealth/9; //every time you receive damage change position healtbar
         healthBar.GetComponent<Image>().color = Color.Lerp(healthBar.GetComponent<Image>().color, Color.red,0.2f);// every time you receive damage change HealtBar Color
     }
 
-    public void HurtsSoundRandom() { //Select Random Hurts Sounds
+    public void HurtsSoundRandomPlay() { //Select Random Hurts Sounds
        audioSource.clip= hurtsSounds[Random.Range(0, hurtsSounds.Length)];
+       // HurtsSoundRandom();
+        audioSource.Play();
+    }
+
+
+    public void TakeDamage(int damage) { //Charcter each take damage
+        HealthBarSetup();//Update Health Bar each take damage
+        HurtsSoundRandomPlay();// each take damage to hurts Sound play
+        health -= damage;
+        Die();
 
     }
 
+    public void Die()
+    {
+        if (health<=0)
+        {
+            Debug.Log("Death");
+
+            //Setup End Game Scene
+        }
+
+
+    }
     private void OnTriggerEnter(Collider other)
     {
         //Collect AmmoBox
@@ -133,19 +154,18 @@ public class charcterController : MonoBehaviour
            ;
         }
         
-        if (other.gameObject.CompareTag("ammo"))
-        {
-            HurtsSoundRandom();
-            audioSource.Play();
-            Destroy(other.gameObject);
-            health -= 10;
-            HealthBarSetup();
-            if (health <= 0)
-            {
-                Debug.Log("Death");
-            }
+        //if (other.gameObject.CompareTag("ammo"))
+        //{
+           
+        //    Destroy(other.gameObject);
+        //    health -= 10;
+        //    HealthBarSetup();
+        //    if (health <= 0)
+        //    {
+        //        Debug.Log("Death");
+        //    }
 
 
-        }
+        //}
     }
 }

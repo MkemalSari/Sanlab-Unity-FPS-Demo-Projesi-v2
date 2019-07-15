@@ -18,11 +18,21 @@ public class Ammo : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "wall")
+        if (other.gameObject.CompareTag("wall"))
         {
             Destroy(gameObject);
         }
+        if (other.gameObject.CompareTag("turret"))
+        {
+            other.GetComponent<Enemies>().TakeDamage(fireDamage);
+        }
+        if (other.gameObject.CompareTag("Player"))
+        {
+            other.GetComponentInChildren<charcterController>().TakeDamage(fireDamage);
+        }
 
+        
+   
 
     }
 }

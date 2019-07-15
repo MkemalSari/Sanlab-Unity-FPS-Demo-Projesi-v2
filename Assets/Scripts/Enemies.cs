@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Enemies : MonoBehaviour
 {
+    public int scoreValue = 10;
     public int health;
     public float fireRate;
     public TextMesh healthText;
