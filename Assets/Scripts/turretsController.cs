@@ -30,29 +30,29 @@ public class TurretsController : Enemies
    
 
     
-    private void OnTriggerEnter(Collider other)
-    {
+    //private void OnTriggerEnter(Collider other)
+    //{
         
 
-        if (other.gameObject.CompareTag("ammo"))
-        {
-            Destroy(other.gameObject);
-            health -= 20;
-            if (health<=0)
-            {
-                Destroy(gameObject);
-            }
-        }
+    //    if (other.gameObject.CompareTag("ammo"))
+    //    {
+    //        Destroy(other.gameObject);
+    //        health -= 20;
+    //        if (health<=0)
+    //        {
+    //            Destroy(gameObject);
+    //        }
+    //    }
 
-        if (other.gameObject.CompareTag("rocket"))
-        {
+    //    if (other.gameObject.CompareTag("rocket"))
+    //    {
 
-            Destroy(other.gameObject);
-            health -= 50;
+    //        Destroy(other.gameObject);
+    //        health -= 50;
             
           
-        }
-    }
+    //    }
+    //}
 }
    
 

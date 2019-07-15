@@ -38,16 +38,16 @@ public class Rocket : MonoBehaviour
                     var dist = Vector3.Distance(item.transform.position, transform.position);
                     Debug.Log(dist);
                  
-                    TurretsController tCt = item.GetComponent<TurretsController>();
-                    TankController tankC = item.GetComponent<TankController>();
+                    Enemies tCt = item.GetComponent<Enemies>();
+                  //  TankController tankC = item.GetComponent<TankController>();
                     if (tCt != null)
                     {
                         tCt.explosion((int)dist); 
                     }
-                    if (tankC != null)
-                    {
-                        tankC.explosion((int)dist);
-                    }
+                    //if (tankC != null)
+                    //{
+                    //    tankC.explosion((int)dist);
+                    //}
 
                 }
             }

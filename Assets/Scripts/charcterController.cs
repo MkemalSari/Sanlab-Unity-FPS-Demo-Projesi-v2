@@ -78,12 +78,8 @@ public class charcterController : MonoBehaviour
         //Mouse1 Click
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if (sec>0.25f)
-            {
-                Fire();
-                sec = 0;
-
-            }
+            Fire();
+           
 
         }
         //Gun Select
@@ -116,9 +112,36 @@ public class charcterController : MonoBehaviour
     }
     void Fire()
     {      //Guns Fire Control
-        if (gunSelect==1) shotGun.Shot(); //Shotgun Fire
-        if (gunSelect == 2) { laser.FireLaser(); }
-        if (gunSelect == 3) rocketLauncher.Shot(); //Rocket Fire
+        if (gunSelect == 1)
+        { 
+            if (sec > shotGun.fireRate)
+            {
+                shotGun.Shot(); //Shotgun Fire
+                sec = 0;
+
+            }
+        }
+
+        if (gunSelect == 2)
+        {
+            if (sec > laser.fireRate)
+            {
+                laser.FireLaser(); //laseer Fire
+                sec = 0;
+
+            }
+           
+        }
+        if (gunSelect == 3)
+        {
+            if (sec > rocketLauncher.fireRate)
+            {
+                rocketLauncher.Shot(); //Rocket Fire
+                sec = 0;
+
+            }
+
+        } 
     }
 
 
