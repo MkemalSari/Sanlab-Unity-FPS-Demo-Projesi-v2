@@ -15,17 +15,15 @@ public class Rocket : MonoBehaviour
         // other.gameObject.tag == "wall" || other.gameObject.tag == "turret" || other.gameObject.tag == "plane"
         if (!(other.gameObject.CompareTag("ammo")))
         {
-            Instantiate(firework, transform.position, Quaternion.identity);
-          //  explosion.Play(); //Explosion effect Play
-          //  Destroy(explosion, 5f);//Delete Explosion sound
-            Collider[] nearbyobject = Physics.OverlapSphere(transform.position, RocketLauncher.ExplosionArea);
+           GameObject exlosionEfect= Instantiate(firework, transform.position, Quaternion.identity); //Create Explosion Efect
+              Destroy(exlosionEfect, 5f);//Delete Explosion Efect
+            Collider[] nearbyobject = Physics.OverlapSphere(transform.position, RocketLauncher.ExplosionArea);//nearby object The area
 
             foreach (var item in nearbyobject)
             {
                 if (item.CompareTag("brick"))
                 {
-
-                    item.GetComponent<Rigidbody>().AddExplosionForce(300f, transform.position, 5f);
+                    item.GetComponent<Rigidbody>().AddExplosionForce(400f, transform.position, 5f); 
                 }
 
 
@@ -38,17 +36,11 @@ public class Rocket : MonoBehaviour
                     var dist = Vector3.Distance(item.transform.position, transform.position);
                     Debug.Log(dist);
                  
-                    Enemies tCt = item.GetComponent<Enemies>();
-                  //  TankController tankC = item.GetComponent<TankController>();
-                    if (tCt != null)
+                    Enemies enemies = item.GetComponent<Enemies>();
+                    if (enemies != null)
                     {
-                        tCt.explosion((int)dist); 
+                        enemies.explosion((int)dist); 
                     }
-                    //if (tankC != null)
-                    //{
-                    //    tankC.explosion((int)dist);
-                    //}
-
                 }
             }
             Destroy(gameObject);

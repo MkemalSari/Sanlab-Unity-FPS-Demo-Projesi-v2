@@ -13,6 +13,7 @@ public class Enemies : MonoBehaviour
     public GameObject enemiesBullet;
     public GameObject burrel;
     public float fireSpeed;
+    bool death = false;
     
 
  
@@ -58,10 +59,26 @@ public class Enemies : MonoBehaviour
         Die();
     }
     public void Die() {
-
-        if (health <= 0)
+        
+        if (health <= 0 && !death)
         {
-            Destroy(gameObject);
+            death = true;
+
+          
+                Destroy(gameObject);
+                charcterController.score += 10;
+               // death = false;
+            
+            //charcterController c = new charcterController();
+            //if (c!=null)
+            //{
+            //    c.score += 10;
+            //}
+
         }
+    }
+    private void FixedUpdate()
+    {
+       
     }
 }

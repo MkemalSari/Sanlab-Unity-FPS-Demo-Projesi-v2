@@ -1,17 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class charcterController : MonoBehaviour
 {
     // Start is called before the first frame update
-
+    public Text scoreText;
+    public static int score=0;
     public int health=100;
     public int gunSelect = 1;
     public LineRenderer line;
     public GameObject[] guns;
-    float sec = 0;
+    public float sec = 0;
     public ShotGun shotGun;
     public RocketLauncher rocketLauncher;
     public Laser laser;
@@ -20,7 +23,8 @@ public class charcterController : MonoBehaviour
     public RectTransform healthBar;
     public AudioClip[] hurtsSounds;
     AudioSource audioSource;
-
+    public Transform spawnPoint;
+    public GameObject endGamePanel;
     void Start()
     {
         
@@ -54,6 +58,7 @@ public class charcterController : MonoBehaviour
             ammoCountText.text = laser.ammoCapacity+"/" + laser.ammoCount + "";
         }
         healthText.text = "" + health + "";
+        scoreText.text = ""+score + "";
     }
 
 
@@ -102,7 +107,11 @@ public class charcterController : MonoBehaviour
             gunSelect = 3;
         }
 
-        
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            score = 0;
+            SelectScane("SanLabFps");
+        }
 
     }
     void AllDeactiveGuns() { //all guns Deactive
@@ -145,24 +154,29 @@ public class charcterController : MonoBehaviour
     }
 
 
-    void HealthBarSetup()
+    void HealthBarDecrease()
     {
         float minHealth = -(healthBar.rect.width-20);//HealthBar distance;
         healthBar.position += healthBar.right * minHealth/9; //every time you receive damage change position healtbar
         healthBar.GetComponent<Image>().color = Color.Lerp(healthBar.GetComponent<Image>().color, Color.red,0.2f);// every time you receive damage change HealtBar Color
     }
+    void HealthBarIncrease()
+    {
+        float minHealth = -(healthBar.rect.width - 20);//HealthBar distance;
+        healthBar.position -= healthBar.right * minHealth / 9; //every time you receive damage change position healtbar
+        healthBar.GetComponent<Image>().color = Color.Lerp(healthBar.GetComponent<Image>().color, Color.green, 0.2f);// every time you receive medkit change HealtBar Color
+    }
 
     public void HurtsSoundRandomPlay() { //Select Random Hurts Sounds
        audioSource.clip= hurtsSounds[Random.Range(0, hurtsSounds.Length)];
-       // HurtsSoundRandom();
         audioSource.Play();
     }
 
 
     public void TakeDamage(int damage) { //Charcter each take damage
-        HealthBarSetup();//Update Health Bar each take damage
-        HurtsSoundRandomPlay();// each take damage to hurts Sound play
         health -= damage;
+        HealthBarDecrease();//Update Health Bar each take damage
+        HurtsSoundRandomPlay();// each take damage to hurts Sound play
         Die();
 
     }
@@ -173,9 +187,18 @@ public class charcterController : MonoBehaviour
         {
             Debug.Log("Death");
 
+            endGamePanel.SetActive(true);
+            Time.timeScale = 0;
+            
             //Setup End Game Scene
         }
 
+    }
+    public void SelectScane(string sceneName)
+    {
+
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+        Time.timeScale = 1;
 
     }
     private void OnTriggerEnter(Collider other)
@@ -199,23 +222,24 @@ public class charcterController : MonoBehaviour
            ;
         }
         //Setup HealhtBox
-        //if (other.gameObject.CompareTag("ammo"))
-        //{
+        if (other.gameObject.CompareTag("healthBox"))
+        {
+            other.gameObject.transform.position = new Vector3(1000, 1000, 1000);
+            Destroy(other.gameObject,2f);
+            health += 10;
+            HealthBarIncrease();
+            if (health >= 100)
+            {
+                health = 100;
+            }
 
-        //    Destroy(other.gameObject);
-        //    health -= 10;
-        //    HealthBarSetup();
-        //    if (health <= 0)
-        //    {
-        //        Debug.Log("Death");
-        //    }
 
+        }
 
-        //}
-
-        if (other.gameObject.CompareTag("water"))
+            if (other.gameObject.CompareTag("water"))
         {
             other.gameObject.GetComponent<AudioSource>().Play();
+          //  gameObject.GetComponentInParent<Transform>().position=new Vector3( spawnPoint.position.x,spawnPoint.position.y,spawnPoint.position.z);
             TakeDamage(20);
           
         }
@@ -231,7 +255,8 @@ public class charcterController : MonoBehaviour
         if (other.gameObject.CompareTag("water"))
         {
             other.gameObject.GetComponent<AudioSource>().Stop();
-           // TakeDamage(10);
+           
+          //  TakeDamage(10);
 
         }
     }
@@ -250,4 +275,6 @@ public class charcterController : MonoBehaviour
 
 
     }
+
+ 
 }

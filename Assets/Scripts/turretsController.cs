@@ -27,32 +27,7 @@ public class TurretsController : Enemies
         healthText.text = health.ToString();
     }
 
-   
-
-    
-    //private void OnTriggerEnter(Collider other)
-    //{
-        
-
-    //    if (other.gameObject.CompareTag("ammo"))
-    //    {
-    //        Destroy(other.gameObject);
-    //        health -= 20;
-    //        if (health<=0)
-    //        {
-    //            Destroy(gameObject);
-    //        }
-    //    }
-
-    //    if (other.gameObject.CompareTag("rocket"))
-    //    {
-
-    //        Destroy(other.gameObject);
-    //        health -= 50;
-            
-          
-    //    }
-    //}
+  
 }
    
 
