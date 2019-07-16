@@ -236,12 +236,18 @@ public class charcterController : MonoBehaviour
 
         }
 
-            if (other.gameObject.CompareTag("water"))
+        if (other.gameObject.CompareTag("water"))
         {
-            other.gameObject.GetComponent<AudioSource>().Play();
-          //  gameObject.GetComponentInParent<Transform>().position=new Vector3( spawnPoint.position.x,spawnPoint.position.y,spawnPoint.position.z);
-            TakeDamage(20);
-          
+        other.gameObject.GetComponent<AudioSource>().Play();
+         //  gameObject.GetComponentInParent<Transform>().position=new Vector3( spawnPoint.position.x,spawnPoint.position.y,spawnPoint.position.z);
+        TakeDamage(20);
+       
+        }
+
+        if (other.gameObject.CompareTag("finish"))
+        {
+            //Setup Finish Scane
+            SelectScane("SanLabFps");
         }
     }
 
