@@ -8,6 +8,7 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class charcterController : MonoBehaviour
 {
     // Start is called before the first frame update
+    //
     public Text scoreText;
     public static int score=0;
     public int health=100;
