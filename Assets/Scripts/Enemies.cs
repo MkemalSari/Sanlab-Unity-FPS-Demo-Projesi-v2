@@ -14,7 +14,6 @@ public class Enemies : MonoBehaviour
     public GameObject burrel;
     public float fireSpeed;
     bool death = false;
-    
 
  
 

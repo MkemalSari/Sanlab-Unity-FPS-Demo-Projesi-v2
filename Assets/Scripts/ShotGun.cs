@@ -7,6 +7,7 @@ public class ShotGun :Guns
     // Start is called before the first frame update
     public float spreadAngle;
     public float spreadCount=20;
+
     //IEnumerator wait()
     //{
 

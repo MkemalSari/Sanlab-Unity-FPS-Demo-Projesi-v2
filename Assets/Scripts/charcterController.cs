@@ -26,9 +26,11 @@ public class charcterController : MonoBehaviour
     AudioSource audioSource;
     public Transform spawnPoint;
     public GameObject endGamePanel;
+
+ 
     void Start()
     {
-        
+       
         audioSource = GetComponent<AudioSource>();
         shotGun = guns[0].GetComponent<ShotGun>();
         laser= guns[1].GetComponent<Laser>();
@@ -43,19 +45,22 @@ public class charcterController : MonoBehaviour
         if (gunSelect == 1)
         {
             GunsImageDeactive();
-            shotGun.gunsImage.gameObject.SetActive(true);
+            shotGun.gunsImage.SetActive(true);
+           
             ammoCountText.text = shotGun.ammoCapacity+"/" + shotGun.ammoCount + "";
         }
         else if (gunSelect == 3)
         {
             GunsImageDeactive();
-            rocketLauncher.gunsImage.gameObject.SetActive(true);
+            rocketLauncher.gunsImage.SetActive(true);
+          
             ammoCountText.text = rocketLauncher.ammoCapacity+"/" + rocketLauncher.ammoCount + "";
         }
         else if (gunSelect == 2)
         {
             GunsImageDeactive();
-            laser.gunsImage.gameObject.SetActive(true);
+            laser.gunsImage.SetActive(true);
+           
             ammoCountText.text = laser.ammoCapacity+"/" + laser.ammoCount + "";
         }
         healthText.text = "" + health + "";
@@ -67,9 +72,9 @@ public class charcterController : MonoBehaviour
 
     public void GunsImageDeactive() {
 
-        shotGun.gunsImage.gameObject.SetActive(false);
-        laser.gunsImage.gameObject.SetActive(false);
-        rocketLauncher.gunsImage.gameObject.SetActive(false);
+        shotGun.gunsImage.SetActive(false);
+        laser.gunsImage.SetActive(false);
+        rocketLauncher.gunsImage.SetActive(false);
 
     }
 

@@ -85,6 +85,7 @@
     <Compile Include="Assets\Scripts\TurretsController.cs" />
     <Compile Include="Assets\Scripts\UIControl.cs" />
     <None Include="Assets\AurynSky\Rockets Missiles and Bombs\READ ME.txt" />
+    <None Include="Assets\ClassDiagram1.cd" />
     <None Include="Assets\SimpleFX\Materials\UnlitVertexColour_Alpha.shader" />
     <None Include="Assets\SampleScenes\Shaders\Skybox-Procedural.shader" />
     <Reference Include="Unity.Timeline.Editor">

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Ammo : MonoBehaviour
 {
@@ -8,19 +9,20 @@ public class Ammo : MonoBehaviour
     public int fireDamage = 10;
     void Start()
     {
-        
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("wall"))
         {
             Destroy(gameObject);
+            
         }
         if (other.gameObject.CompareTag("turret"))
         {
@@ -31,8 +33,8 @@ public class Ammo : MonoBehaviour
             other.GetComponentInChildren<charcterController>().TakeDamage(fireDamage);
         }
 
-        
-   
+
+
 
     }
 }

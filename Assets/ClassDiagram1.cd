@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Ammo" Collapsed="true">
+    <Position X="11.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQACAAAACAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Ammo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="charcterController" Collapsed="true">
+    <Position X="9" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAUAAAAEAiAAIUAgAAQIgAJQAMAEGIACQkBExAQQACo=</HashCode>
+      <FileName>Assets\Scripts\charcterController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Guns" />
+      <Property Name="UIControl" />
+      <Property Name="CollectItems" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CollectItems" Collapsed="true">
+    <Position X="11.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\CollectItems.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Enemies" Collapsed="true">
+    <Position X="15.5" Y="2.75" Width="1.5" />
+    <AssociationLine Name="Ammo" Type="Ammo" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="15.5" Y="3.125" />
+        <Point X="14.25" Y="3.125" />
+        <Point X="14.25" Y="6.816" />
+        <Point X="11.938" Y="6.816" />
+        <Point X="11.938" Y="6.441" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>ACAAACAAAiIACEAgIAACAAQAABAABAAABAAAoAAAAAg=</HashCode>
+      <FileName>Assets\Scripts\Enemies.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Ammo" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Guns" Collapsed="true">
+    <Position X="9" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQAAAAAACIAgAAAAACABQAAAAQAAAAABAAAAQAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Guns.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Laser" Collapsed="true">
+    <Position X="9" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAEAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Laser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Movement" Collapsed="true">
+    <Position X="16.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQABEAAACAAAAAAAAAAAAAAAAAKAAAAAAAAAAQAgAA=</HashCode>
+      <FileName>Assets\Scripts\Movement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rocket" Collapsed="true">
+    <Position X="6.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Rocket.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RocketLauncher" Collapsed="true">
+    <Position X="6.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAIAAAAAIAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\RocketLauncher.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Rocket" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ShotGun" Collapsed="true">
+    <Position X="11.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACQAAAAAACAAAAAAAAAAAAAAAAAIAAACAAAAAAAAgAA=</HashCode>
+      <FileName>Assets\Scripts\ShotGun.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Ammo" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TankController" Collapsed="true">
+    <Position X="16.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAEiEAAAAABAQAAAAAAAAAIAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\TankController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Movement" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TurretsController" Collapsed="true">
+    <Position X="14.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAgAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\TurretsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIControl" Collapsed="true">
+    <Position X="6.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\UIControl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -15,7 +15,7 @@ public class Guns : MonoBehaviour
     public AudioSource GunShotSound; //
     public float bulletVelocity;
     public GameObject burrel;
-    public RawImage gunsImage;
+    public GameObject gunsImage;
 
    
     // Start is called before the first frame update

@@ -10,6 +10,9 @@ public class TankController : Enemies
     float sec = 0;
     Vector3 velocity = Vector3.zero;
      NavMeshAgent navMesh;
+
+   
+
     void Start()
        
     {

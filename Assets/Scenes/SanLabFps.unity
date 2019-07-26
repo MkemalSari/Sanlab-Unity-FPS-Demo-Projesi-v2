@@ -811,7 +811,7 @@ MonoBehaviour:
   GunShotSound: {fileID: 81791077}
   bulletVelocity: 0
   burrel: {fileID: 1190059416}
-  gunsImage: {fileID: 2015944521}
+  gunsImage: {fileID: 2015944519}
   line: {fileID: 773568375}
 --- !u!114 &89051554 stripped
 MonoBehaviour:
@@ -2578,10 +2578,10 @@ RectTransform:
   m_Children:
   - {fileID: 182246923}
   - {fileID: 792419013}
-  - {fileID: 1409287334}
   - {fileID: 1990041012}
   - {fileID: 2066055396}
   - {fileID: 2027149284}
+  - {fileID: 1409287334}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8974,7 +8974,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &885834278
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9883,8 +9883,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 45.979904, y: -4.8540945}
-  m_SizeDelta: {x: 108.44, y: 56.16}
+  m_AnchoredPosition: {x: 57.06, y: -4.8540945}
+  m_SizeDelta: {x: 137.24, y: 56.16}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1076062071
 MonoBehaviour:
@@ -12701,11 +12701,11 @@ RectTransform:
   - {fileID: 171307116}
   - {fileID: 788957301}
   m_Father: {fileID: 600203218}
-  m_RootOrder: 2
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.0000076293945}
+  m_AnchoredPosition: {x: 0, y: -0}
   m_SizeDelta: {x: 299.3, y: 214.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1409287335
@@ -15997,7 +15997,7 @@ MonoBehaviour:
   GunShotSound: {fileID: 1955705946}
   bulletVelocity: 500
   burrel: {fileID: 1190059416}
-  gunsImage: {fileID: 885834279}
+  gunsImage: {fileID: 885834277}
   spreadAngle: 5
   spreadCount: 20
 --- !u!1 &1990041011
@@ -16032,7 +16032,7 @@ RectTransform:
   - {fileID: 508151620}
   - {fileID: 1076062070}
   m_Father: {fileID: 600203218}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -16555,7 +16555,7 @@ RectTransform:
   - {fileID: 2015944520}
   - {fileID: 886337520}
   m_Father: {fileID: 600203218}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -16836,7 +16836,7 @@ RectTransform:
   - {fileID: 2011528679}
   - {fileID: 327654619}
   m_Father: {fileID: 600203218}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -17374,6 +17374,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.219
+      objectReference: {fileID: 0}
+    - target: {fileID: 5621880391793140321, guid: 69f1dd3d57176fa4ba28cdd019c9e59a,
+        type: 3}
+      propertyPath: gunsImage
+      value: 
+      objectReference: {fileID: 2015944519}
+    - target: {fileID: 5621880391793140321, guid: 69f1dd3d57176fa4ba28cdd019c9e59a,
+        type: 3}
+      propertyPath: burrel
+      value: 
+      objectReference: {fileID: 1190059416}
+    - target: {fileID: 5621880391793140321, guid: 69f1dd3d57176fa4ba28cdd019c9e59a,
+        type: 3}
+      propertyPath: line
+      value: 
+      objectReference: {fileID: 773568375}
+    - target: {fileID: 5621880391793140321, guid: 69f1dd3d57176fa4ba28cdd019c9e59a,
+        type: 3}
+      propertyPath: GunShotSound
+      value: 
+      objectReference: {fileID: 81791077}
+    - target: {fileID: 5621880391793140321, guid: 69f1dd3d57176fa4ba28cdd019c9e59a,
+        type: 3}
+      propertyPath: ammoCapacity
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5621880391793140321, guid: 69f1dd3d57176fa4ba28cdd019c9e59a,
+        type: 3}
+      propertyPath: ammoCount
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1685485627090032310, guid: 69f1dd3d57176fa4ba28cdd019c9e59a, type: 3}
@@ -17913,6 +17943,16 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7905300716940920620, guid: 9a38bbc976a560346a6dfa640586cd12,
+        type: 3}
+      propertyPath: burrel
+      value: 
+      objectReference: {fileID: 1190059416}
+    - target: {fileID: 7905300716940920620, guid: 9a38bbc976a560346a6dfa640586cd12,
+        type: 3}
+      propertyPath: gunsImage
+      value: 
+      objectReference: {fileID: 886337517}
     m_RemovedComponents:
     - {fileID: 614699814662612522, guid: 9a38bbc976a560346a6dfa640586cd12, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9a38bbc976a560346a6dfa640586cd12, type: 3}
@@ -18298,7 +18338,7 @@ MonoBehaviour:
     type: 3}
   bulletVelocity: 500
   burrel: {fileID: 1190059416}
-  gunsImage: {fileID: 886337518}
+  gunsImage: {fileID: 886337517}
 --- !u!4 &8341203027995810589 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8341203027995810589, guid: 9a38bbc976a560346a6dfa640586cd12,

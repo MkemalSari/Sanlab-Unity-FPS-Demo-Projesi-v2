@@ -12,7 +12,7 @@ public class Rocket : MonoBehaviour
        float distance= Vector3.Distance(transform.position, other.transform.position);
       // Debug.Log(other.gameObject.name+"  "+ distance);
 
-        // other.gameObject.tag == "wall" || other.gameObject.tag == "turret" || other.gameObject.tag == "plane"
+     
         if (!(other.gameObject.CompareTag("ammo")))
         {
            GameObject exlosionEfect= Instantiate(firework, transform.position, Quaternion.identity); //Create Explosion Efect
