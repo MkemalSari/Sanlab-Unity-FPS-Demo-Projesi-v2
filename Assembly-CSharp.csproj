@@ -67,7 +67,6 @@
     <Compile Include="Assets\SampleScenes\Menu\Scripts\SceneAndURLLoader.cs" />
     <Compile Include="Assets\SampleScenes\Scripts\CameraSwitch.cs" />
     <Compile Include="Assets\SampleScenes\Scripts\LevelReset.cs" />
-    <Compile Include="Assets\SampleScenes\Scripts\ParticleSceneControls.cs" />
     <Compile Include="Assets\SampleScenes\Scripts\PlaceTargetWithMouse.cs" />
     <Compile Include="Assets\SampleScenes\Scripts\SlowMoButton.cs" />
     <Compile Include="Assets\Scripts\Ammo.cs" />
@@ -84,7 +83,6 @@
     <Compile Include="Assets\Scripts\TankController.cs" />
     <Compile Include="Assets\Scripts\TurretsController.cs" />
     <Compile Include="Assets\Scripts\UIControl.cs" />
-    <None Include="Assets\AurynSky\Rockets Missiles and Bombs\READ ME.txt" />
     <None Include="Assets\ClassDiagram1.cd" />
     <None Include="Assets\SimpleFX\Materials\UnlitVertexColour_Alpha.shader" />
     <None Include="Assets\SampleScenes\Shaders\Skybox-Procedural.shader" />
