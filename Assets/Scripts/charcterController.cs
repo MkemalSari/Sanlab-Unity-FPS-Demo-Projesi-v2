@@ -1,33 +1,38 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
 
-public class charcterController : MonoBehaviour
+public class charcterController : MonoBehaviourPunCallbacks
 {
     // Start is called before the first frame update
     //
-    public Text scoreText;
+   
     public static int score=0;
     public int health=100;
     public int gunSelect = 1;
-    public LineRenderer line;
     public GameObject[] guns;
     public float sec = 0;
     public ShotGun shotGun;
     public RocketLauncher rocketLauncher;
     public Laser laser;
-    public Text ammoCountText;
-    public Text healthText;
+    public static GameObject LocalPlayerInstance;
     public RectTransform healthBar;
     public AudioClip[] hurtsSounds;
     AudioSource audioSource;
     public Transform spawnPoint;
-    public GameObject endGamePanel;
 
- 
+    private void Awake()
+    {
+        if (photonView.IsMine)
+        {
+            LocalPlayerInstance = gameObject;
+        }
+    }
+
     void Start()
     {
        
@@ -41,124 +46,131 @@ public class charcterController : MonoBehaviour
     }
     private void FixedUpdate()
     {
+
+        if (photonView.IsMine)
+        {
+           
        
         if (gunSelect == 1)
         {
-            GunsImageDeactive();
-            shotGun.gunsImage.SetActive(true);
+            //GunsImageDeactive();
+            //shotGun.gunsImage.SetActive(true);
            
-            ammoCountText.text = shotGun.ammoCapacity+"/" + shotGun.ammoCount + "";
+           // ammoCountText.text = shotGun.ammoCapacity+"/" + shotGun.ammoCount + "";
         }
         else if (gunSelect == 3)
         {
-            GunsImageDeactive();
-            rocketLauncher.gunsImage.SetActive(true);
+            //GunsImageDeactive();
+            //rocketLauncher.gunsImage.SetActive(true);
           
-            ammoCountText.text = rocketLauncher.ammoCapacity+"/" + rocketLauncher.ammoCount + "";
+           // ammoCountText.text = rocketLauncher.ammoCapacity+"/" + rocketLauncher.ammoCount + "";
         }
         else if (gunSelect == 2)
         {
-            GunsImageDeactive();
-            laser.gunsImage.SetActive(true);
+            //GunsImageDeactive();
+           // laser.gunsImage.SetActive(true);
            
-            ammoCountText.text = laser.ammoCapacity+"/" + laser.ammoCount + "";
+           // ammoCountText.text = laser.ammoCapacity+"/" + laser.ammoCount + "";
         }
-        healthText.text = "" + health + "";
-        scoreText.text = ""+score + "";
+      //  healthText.text = "" + health + "";
+      //  scoreText.text = ""+score + "";
+    }
+
     }
 
 
 
+    //public void GunsImageDeactive() {
 
-    public void GunsImageDeactive() {
+    //    shotGun.gunsImage.SetActive(false);
+    //    laser.gunsImage.SetActive(false);
+    //    rocketLauncher.gunsImage.SetActive(false);
 
-        shotGun.gunsImage.SetActive(false);
-        laser.gunsImage.SetActive(false);
-        rocketLauncher.gunsImage.SetActive(false);
-
-    }
+    //}
 
     // Update is called once per frame
     void Update()
     {
 
-      
+        if (photonView.IsMine)
+        {
 
 
-        sec += Time.deltaTime;
-        //Mouse1 Click
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Fire();
-           
-
-        }
-        //Gun Select
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            AllDeactiveGuns();
-            guns[0].gameObject.SetActive(true);
-            gunSelect = 1;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            AllDeactiveGuns();
-            guns[1].gameObject.SetActive(true);
-            gunSelect = 2;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            AllDeactiveGuns();
-            guns[2].gameObject.SetActive(true);
-            gunSelect = 3;
-        }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            score = 0;
-            SelectScane("SanLabFps");
-        }
-
-    }
-    void AllDeactiveGuns() { //all guns Deactive
-        guns[0].gameObject.SetActive(false);
-        guns[1].gameObject.SetActive(false);
-        guns[2].gameObject.SetActive(false);
-    }
-    void Fire()
-    {      //Guns Fire Control
-        if (gunSelect == 1)
-        { 
-            if (sec > shotGun.fireRate)
+            sec += Time.deltaTime;
+            //Mouse1 Click
+            if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                shotGun.Shot(); //Shotgun Fire
-                sec = 0;
+                Fire();
+
+
+            }
+            //Gun Select
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                AllDeactiveGuns();
+                guns[0].gameObject.SetActive(true);
+                gunSelect = 1;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                AllDeactiveGuns();
+                guns[1].gameObject.SetActive(true);
+                gunSelect = 2;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                AllDeactiveGuns();
+                guns[2].gameObject.SetActive(true);
+                gunSelect = 3;
+            }
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                score = 0;
+                SelectScane("SanLabFps");
+            }
+
+        }
+        void AllDeactiveGuns()
+        { //all guns Deactive
+            guns[0].gameObject.SetActive(false);
+            guns[1].gameObject.SetActive(false);
+            guns[2].gameObject.SetActive(false);
+        }
+        void Fire()
+        {      //Guns Fire Control
+            if (gunSelect == 1)
+            {
+                if (sec > shotGun.fireRate)
+                {
+                    shotGun.Shot(); //Shotgun Fire
+                    sec = 0;
+
+                }
+            }
+
+            if (gunSelect == 2)
+            {
+                if (sec > laser.fireRate)
+                {
+                    laser.FireLaser(); //laseer Fire
+                    sec = 0;
+
+                }
+
+            }
+            if (gunSelect == 3)
+            {
+                if (sec > rocketLauncher.fireRate)
+                {
+                    rocketLauncher.Shot(); //Rocket Fire
+                    sec = 0;
+
+                }
 
             }
         }
-
-        if (gunSelect == 2)
-        {
-            if (sec > laser.fireRate)
-            {
-                laser.FireLaser(); //laseer Fire
-                sec = 0;
-
-            }
-           
-        }
-        if (gunSelect == 3)
-        {
-            if (sec > rocketLauncher.fireRate)
-            {
-                rocketLauncher.Shot(); //Rocket Fire
-                sec = 0;
-
-            }
-
-        } 
     }
-
 
     void HealthBarDecrease()
     {
@@ -193,7 +205,7 @@ public class charcterController : MonoBehaviour
         {
             Debug.Log("Death");
 
-            endGamePanel.SetActive(true);
+          //  endGamePanel.SetActive(true);
             Time.timeScale = 0;
             
             //Setup End Game Scene

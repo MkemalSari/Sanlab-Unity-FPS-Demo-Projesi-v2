@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,6 +27,7 @@ public class ShotGun :Guns
     {
         
     }
+    
     public void Shot()
     {
 
@@ -35,9 +37,9 @@ public class ShotGun :Guns
             GunShotSound.Play();
             for (int i = 0; i < spreadCount; i++)
             {
-            GameObject bullet = (GameObject)Instantiate(bulletPrefab, burrel.transform.position, burrel.transform.rotation) as GameObject;
+            GameObject bullet =Instantiate(bulletPrefab, burrel.transform.position, burrel.transform.rotation);
             bullet.transform.rotation = Quaternion.RotateTowards(bullet.transform.rotation, Random.rotation, spreadAngle);
-            bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * bulletVelocity);
+            bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * (bulletVelocity+Random.Range(0,150)));
             Destroy(bullet, 5f);
             }
         }

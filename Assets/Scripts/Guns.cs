@@ -7,7 +7,7 @@ public class Guns : MonoBehaviour
 {
 
     public float fireRate; //bullet velocity of  weapon
-    public int damage; //bullet damage of weapon
+    public float damage; //bullet damage of weapon
     public GameObject bulletPrefab;//need bullet model
     public int ammoCapacity; //have ammo capacity
     public int ammoCount; //have ammo Count
@@ -15,7 +15,7 @@ public class Guns : MonoBehaviour
     public AudioSource GunShotSound; //
     public float bulletVelocity;
     public GameObject burrel;
-    public GameObject gunsImage;
+  //  public GameObject gunsImage;
 
    
     // Start is called before the first frame update

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun.Demo.PunBasics;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,9 +35,9 @@ public class Laser : Guns
                 GunShotSound.Play();
                 if (hit.collider && !hit.collider.CompareTag("ammo"))
                 {
-                    if (hit.collider.GetComponent<Enemies>()) 
+                    if (hit.collider.GetComponent<PlayerManager>()) 
                     {
-                        hit.collider.GetComponent<Enemies>().TakeDamage(damage);
+                        hit.collider.GetComponent<PlayerManager>().TakeDamage(damage);
                     }
                     line.SetPosition(1, hit.point);
                 }
