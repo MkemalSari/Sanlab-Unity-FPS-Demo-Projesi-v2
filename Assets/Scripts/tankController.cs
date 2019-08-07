@@ -1,22 +1,23 @@
-﻿using System.Collections;
+﻿using Photon.Pun.Demo.PunBasics;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class TankController : Enemies
 {
-   
+
     public float moveSpeed;
     float sec = 0;
     Vector3 velocity = Vector3.zero;
-     NavMeshAgent navMesh;
+    NavMeshAgent navMesh;
 
-   
+
 
     void Start()
-       
+
     {
-        navMesh=GetComponent<NavMeshAgent>();
+        navMesh = GetComponent<NavMeshAgent>();
     }
     private void FixedUpdate()
     {
@@ -25,38 +26,42 @@ public class TankController : Enemies
     // Update is called once per frame
     void Update()
     {
-     //  LookAtTarget();
-         GoToTarget();
+        //  LookAtTarget();
+        GoToTarget();
         sec += Time.deltaTime;
         if (sec > fireRate)
         {
             EnemiesFire();
             sec = 0;
         }
-       
+
     }
 
     void GoToTarget()
     {
-        if (navMesh != null)
+        target = FindObjectOfType<PlayerManager>();
+        if (target != null)
         {
-            navMesh.SetDestination(target.transform.position);
-        }
 
-        RaycastHit hit;
+            if (navMesh != null)
+            {
+                navMesh.SetDestination(target.transform.position);
+            }
 
-           if (Physics.Raycast(burrel.transform.position, burrel.transform.forward, out hit,100f))
-           {
-                
+            RaycastHit hit;
+
+            if (Physics.Raycast(burrel.transform.position, burrel.transform.forward, out hit, 100f))
+            {
+
                 if (hit.transform.gameObject.CompareTag("Player"))
                 {
-               
 
+
+                }
             }
-           }
-    }
+        }
 
-  
+    }
 
 
 

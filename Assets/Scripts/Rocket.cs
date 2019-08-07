@@ -10,8 +10,8 @@ public class Rocket : MonoBehaviour
     Rigidbody rb;
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * 500);
+       // rb = GetComponent<Rigidbody>();
+        //rb.AddForce(transform.forward * 500);
         Destroy(gameObject, destroyTime);
     }
 
@@ -40,8 +40,11 @@ public class Rocket : MonoBehaviour
 
                     var dist = Vector3.Distance(item.transform.position, transform.position);
                     Debug.Log(dist);
-
-                    item.GetComponent<PlayerManager>().TakeDamage(1 / dist);
+                   
+                        item.GetComponent<PlayerManager>().TakeDamage(1 / dist);
+                    
+                    
+                   
 
                     //if (enemies != null)
                     //{

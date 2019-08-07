@@ -13,11 +13,14 @@ public class Ammo : MonoBehaviour
     void Start()
     {
         gameObject.SetActive(true);
-        rb = GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * 500);
+        // rb = GetComponent<Rigidbody>();
+        // rb.AddForce(transform.forward * 500);
         Destroy(gameObject, destroyTime);
     }
 
+    //void NetworkDestroy() {
+    //    PhotonNetwork.Destroy(gameObject);
+    //}
     // Update is called once per frame
     void Update()
     {

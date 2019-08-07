@@ -8,12 +8,14 @@
 // <author>developer@exitgames.com</author>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Photon.Pun.Demo.PunBasics
 {
-	#pragma warning disable 649
+#pragma warning disable 649
 
     /// <summary>
     /// Player manager.
@@ -30,8 +32,12 @@ namespace Photon.Pun.Demo.PunBasics
         public static GameObject LocalPlayerInstance;
         public float fireRate = 0.5f;
         public Transform burrel;
-        public int selectGun=1;
+        public int selectGun = 0;
         public Transform[] guns;
+        ShotGun shotGun;
+        Laser laser;
+        RocketLauncher rocketLauncer;
+
 
         #endregion
 
@@ -58,7 +64,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// </summary>
         public void Awake()
         {
-            
+
             //if (this.beams == null)
             //{
             //    Debug.LogError("<Color=Red><b>Missing</b></Color> Beams Reference.", this);
@@ -85,50 +91,47 @@ namespace Photon.Pun.Demo.PunBasics
         /// </summary>
         public void Start()
         {
+            if (!photonView.IsMine)
+            {
+                gameObject.GetComponentInChildren<Camera>().enabled = false;
+            }
+            StartCoroutine(RechargeLaser()); //Start Laser Charge
+            shotGun = guns[0].GetComponent<ShotGun>();
+            laser = guns[1].GetComponent<Laser>();
+            rocketLauncer = guns[2].GetComponent<RocketLauncher>();
 
 
 
-            //CameraWork _cameraWork = gameObject.GetComponent<CameraWork>();
+            //Create the UI
+            if (this.playerUiPrefab != null)
+            {
+                GameObject _uiGo = Instantiate(this.playerUiPrefab);
+                _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
+            }
+            else
+            {
+                Debug.LogWarning("<Color=Red><b>Missing</b></Color> PlayerUiPrefab reference on player Prefab.", this);
+            }
 
-            //if (_cameraWork != null)
-            //{
-            //    if (photonView.IsMine)
-            //    {
-            //        _cameraWork.OnStartFollowing();
-            //    }
-            //}
-            //else
-            //{
-            //    Debug.LogError("<Color=Red><b>Missing</b></Color> CameraWork Component on player Prefab.", this);
-            //}
+            //_uiGo = FindObjectOfType<UIControl>();
+            //_uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
 
-            // Create the UI
-            //if (this.playerUiPrefab != null)
-            //{
-            //    GameObject _uiGo = Instantiate(this.playerUiPrefab);
-            //    _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
-            //}
-            //else
-            //{
-            //    Debug.LogWarning("<Color=Red><b>Missing</b></Color> PlayerUiPrefab reference on player Prefab.", this);
-            //}
-
-            #if UNITY_5_4_OR_NEWER
+#if UNITY_5_4_OR_NEWER
             // Unity 5.4 has a new scene management. register a method to call CalledOnLevelWasLoaded.
-			UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
-            #endif
+            UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+#endif
         }
 
 
-		public override void OnDisable()
-		{
-			// Always call the base to remove callbacks
-			base.OnDisable ();
+        public override void OnDisable()
+        {
+            // Always call the base to remove callbacks
+            base.OnDisable();
 
-			#if UNITY_5_4_OR_NEWER
-			UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
-			#endif
-		}
+#if UNITY_5_4_OR_NEWER
+            UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+#endif
+        }
 
 
         /// <summary>
@@ -142,7 +145,7 @@ namespace Photon.Pun.Demo.PunBasics
             // we only process Inputs and check health if we are the local player
             if (photonView.IsMine)
             {
-               // print(Time.fixedTime);
+                // print(Time.fixedTime);
                 this.ProcessInputs();
 
                 if (this.Health <= 0f)
@@ -150,17 +153,14 @@ namespace Photon.Pun.Demo.PunBasics
                     GameManager.Instance.LeaveRoom();
                 }
 
-               
-               
+
+
 
 
             }
 
 
-            if (this.beams != null && this.IsFiring != this.beams.activeInHierarchy)
-            {
-                this.beams.SetActive(this.IsFiring);
-            }
+
         }
 
         /// <summary>
@@ -172,34 +172,18 @@ namespace Photon.Pun.Demo.PunBasics
         ///
         public void TakeDamage(float dmg)
         {
-            this.Health -= dmg;
-
-        }
-        public void OnTriggerEnter(Collider other)
-        {
             if (!photonView.IsMine)
             {
                 return;
             }
+            this.Health -= dmg;
 
 
-            // We are only interested in Beamers
-            // we should be using tags but for the sake of distribution, let's simply check by name.
-            if (other.name.Contains("Beam"))
-            {
-                this.Health -= 0.1f;
-            }
-
-            //if (other.CompareTag("ammo"))
-            //{
-            //    if (other.GetComponent<PhotonView>().Owner == photonView.Owner)
-            //        return;
-
-            //    this.Health -= 0.2f;
-            //}
-            
+            // _uiGo.GetComponent<UIControl>().SetSliderValue(this.Health);
         }
 
+
+     
         /// <summary>
         /// MonoBehaviour method called once per frame for every Collider 'other' that is touching the trigger.
         /// We're going to affect health while the beams are interesting the player
@@ -221,17 +205,17 @@ namespace Photon.Pun.Demo.PunBasics
             }
 
             // we slowly affect health when beam is constantly hitting us, so player has to move to prevent death.
-            this.Health -= 0.1f*Time.deltaTime;
+            this.Health -= 0.1f * Time.deltaTime;
         }
 
 
-        #if !UNITY_5_4_OR_NEWER
+#if !UNITY_5_4_OR_NEWER
         /// <summary>See CalledOnLevelWasLoaded. Outdated in Unity 5.4.</summary>
         void OnLevelWasLoaded(int level)
         {
             this.CalledOnLevelWasLoaded(level);
         }
-        #endif
+#endif
 
 
         /// <summary>
@@ -250,6 +234,7 @@ namespace Photon.Pun.Demo.PunBasics
 
             GameObject _uiGo = Instantiate(this.playerUiPrefab);
             _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
+
         }
 
         #endregion
@@ -257,16 +242,27 @@ namespace Photon.Pun.Demo.PunBasics
         #region Private Methods
 
 
-		#if UNITY_5_4_OR_NEWER
-		void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode loadingMode)
-		{
-			this.CalledOnLevelWasLoaded(scene.buildIndex);
-		}
-		#endif
+#if UNITY_5_4_OR_NEWER
+        void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode loadingMode)
+        {
+            this.CalledOnLevelWasLoaded(scene.buildIndex);
+        }
+#endif
 
         /// <summary>
         /// Processes the inputs. This MUST ONLY BE USED when the player has authority over this Networked GameObject (photonView.isMine == true)
         /// </summary>
+        /// 
+        [PunRPC]
+        void ShotLaser()
+        {
+            if (!photonView.IsMine)
+            {
+                return;
+            }
+
+            laser.Shot();
+        }
         void ProcessInputs()
         {
             if (Input.GetButtonDown("Fire1"))
@@ -277,23 +273,27 @@ namespace Photon.Pun.Demo.PunBasics
                 {
                     //	return;
                 }
-               
+
                 if (Time.time > fireRate)
                 {
-                    if (selectGun == 0)
+                    if (selectGun == 0 && shotGun.ammoCount > 0)
                     {
                         fireRate += Time.deltaTime;
-                        PhotonNetwork.Instantiate("ammo", burrel.position, burrel.rotation, 0);
+                        //PhotonNetwork.Instantiate("ammo", burrel.position, burrel.rotation, 0);
+                        //shotGun.ammoCount--;
+                        shotGun.Shot();
+
                     }
-                    if (selectGun == 1)
+                    if (selectGun == 1 && laser.ammoCount >= 10)
                     {
                         fireRate += Time.deltaTime;
-                        PhotonNetwork.Instantiate("ammo", burrel.position, burrel.rotation, 0);
+                        //photonView.RPC("ShotLaser", RpcTarget.All);
+                        laser.IsFiring = true;
                     }
-                    if (selectGun == 2)
+                    if (selectGun == 2 && rocketLauncer.ammoCount > 0)
                     {
                         fireRate += Time.deltaTime;
-                        PhotonNetwork.Instantiate("RoketV1", burrel.position, burrel.rotation,0);
+                        rocketLauncer.Shot();
                     }
 
 
@@ -307,9 +307,9 @@ namespace Photon.Pun.Demo.PunBasics
             if (Input.GetButtonDown("Jump"))
             {
 
-              
+
             }
-           
+
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 photonView.RPC("ChangeGun", RpcTarget.All, 0);
@@ -323,18 +323,18 @@ namespace Photon.Pun.Demo.PunBasics
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
                 photonView.RPC("ChangeGun", RpcTarget.All, 2);
-               // ChangeGun(2);
+                // ChangeGun(2);
             }
 
 
 
-            //if (Input.GetButtonUp("Fire1"))
-            //{
-            //    if (this.IsFiring)
-            //    {
-            //        this.IsFiring = false;
-            //    }
-            //}
+            if (Input.GetButtonUp("Fire1"))
+            {
+                if (laser.IsFiring)
+                {
+                    laser.IsFiring = false;
+                }
+            }
         }
         [PunRPC]
         public void ChangeGun(int num)
@@ -347,8 +347,20 @@ namespace Photon.Pun.Demo.PunBasics
                 else
                     guns[i].gameObject.SetActive(false);
             }
-        } 
+        }
+        IEnumerator RechargeLaser()
+        {
 
+            yield return new WaitForSeconds(0.3f);
+
+            if (laser.ammoCount < laser.ammoCapacity)
+            {
+                laser.ammoCount++;
+            }
+            StartCoroutine(RechargeLaser());
+
+
+        }
 
 
         #endregion
@@ -360,22 +372,99 @@ namespace Photon.Pun.Demo.PunBasics
             if (stream.IsWriting)
             {
                 // We own this player: send the others our data
-                stream.SendNext(this.IsFiring);
+                if (laser != null)
+                {
+                    stream.SendNext(this.laser.IsFiring);
+                }
                 stream.SendNext(this.Health);
-             
+
             }
             else
             {
                 // Network player, receive data
                 //
-                this.IsFiring = (bool)stream.ReceiveNext();
+                if (laser != null)
+                {
+                    this.laser.IsFiring = (bool)stream.ReceiveNext();
+                }
+
                 this.Health = (float)stream.ReceiveNext();
-             
-               
+
+
 
             }
         }
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!photonView.IsMine)
+            {
+                return;
+            }
 
+
+            // We are only interested in Beamers
+            // we should be using tags but for the sake of distribution, let's simply check by name.
+            if (other.name.Contains("Beam"))
+            {
+                this.Health -= 0.1f;
+            }
+
+            //if (other.CompareTag("ammo"))
+            //{
+            //    if (other.GetComponent<PhotonView>().Owner == photonView.Owner)
+            //        return;
+
+            //    this.Health -= 0.2f;
+            //}
+            //Collect AmmoBox
+            if (other.gameObject.CompareTag("ammoBox"))
+            {
+                other.gameObject.GetComponent<AudioSource>().Play();
+                other.gameObject.transform.position = new Vector3(1000, 1000, 1000);
+                Destroy(other.gameObject, 1f);
+                shotGun.ammoCount += 5;
+                rocketLauncer.ammoCount += 2;
+                if (rocketLauncer.ammoCount > 5)
+                {
+                    rocketLauncer.ammoCount = 5;
+                }
+                if (shotGun.ammoCount > 10)
+                {
+                    shotGun.ammoCount = 10;
+                }
+               ;
+            }
+            //Setup HealhtBox
+            if (other.gameObject.CompareTag("healthBox"))
+            {
+                other.gameObject.GetComponent<AudioSource>().Play();
+                other.gameObject.transform.position = new Vector3(1000, 1000, 1000);
+                Destroy(other.gameObject, 1f);
+               
+                this.Health += 0.3f;
+                if (this.Health>1)
+                {
+                    this.Health = 1;
+                }
+
+
+            }
+
+            if (other.gameObject.CompareTag("water"))
+            {
+                other.gameObject.GetComponent<AudioSource>().Play();
+                //  gameObject.GetComponentInParent<Transform>().position=new Vector3( spawnPoint.position.x,spawnPoint.position.y,spawnPoint.position.z);
+                TakeDamage(0.2f);
+
+            }
+
+            //if (other.gameObject.CompareTag("finish"))
+            //{
+            //    //Setup Finish Scane
+            //    SelectScane("SanLabFps");
+            //}
+        }
         #endregion
     }
+
 }

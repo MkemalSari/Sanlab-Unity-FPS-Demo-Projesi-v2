@@ -18,6 +18,7 @@ TagManager:
   - healthBox
   - finish
   - Plane
+  - beam
   layers:
   - Default
   - TransparentFX

@@ -153,7 +153,7 @@ public class charcterController : MonoBehaviourPunCallbacks
             {
                 if (sec > laser.fireRate)
                 {
-                    laser.FireLaser(); //laseer Fire
+                    laser.Shot(); //laseer Fire
                     sec = 0;
 
                 }

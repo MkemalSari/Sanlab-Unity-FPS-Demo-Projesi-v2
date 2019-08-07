@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,10 +28,10 @@ public class RocketLauncher : Guns
         {
             ammoCount--;
           
-                GameObject bullet = (GameObject)Instantiate(bulletPrefab, burrel.transform.position, burrel.transform.rotation) as GameObject;
+                GameObject bullet =PhotonNetwork.Instantiate("RoketV1", burrel.transform.position, burrel.transform.rotation);
                 bullet.GetComponent<Rigidbody>().AddForce(burrel.transform.forward * bulletVelocity);
           
-            Destroy(bullet, 5f);
+           // Destroy(bullet, 5f);
            
             
         }

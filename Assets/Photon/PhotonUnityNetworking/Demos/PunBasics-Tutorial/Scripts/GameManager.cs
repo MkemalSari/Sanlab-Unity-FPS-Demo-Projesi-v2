@@ -27,8 +27,8 @@ namespace Photon.Pun.Demo.PunBasics
 	public class GameManager : MonoBehaviourPunCallbacks
     {
 
-		#region Public Fields
-
+        #region Public Fields
+        
 		static public GameManager Instance;
       
 
@@ -41,6 +41,9 @@ namespace Photon.Pun.Demo.PunBasics
         [Tooltip("The prefab to use for representing the player")]
         [SerializeField]
         private GameObject playerPrefab;
+         public Transform[] spawns;
+
+
 
         #endregion
 
@@ -72,7 +75,8 @@ namespace Photon.Pun.Demo.PunBasics
 				    Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
 
 					// we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
-					PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(Random.Range(0,10f),22f,-40f), Quaternion.identity, 0);
+					GameObject localGO = PhotonNetwork.Instantiate(this.playerPrefab.name,NextSpawn().position,NextSpawn().rotation, 0);
+                    
 				}else{
 
 					Debug.LogFormat("Ignoring scene load for {0}", SceneManagerHelper.ActiveSceneName);
@@ -169,8 +173,17 @@ namespace Photon.Pun.Demo.PunBasics
 			PhotonNetwork.LoadLevel("SanLabFps");
 		}
 
-		#endregion
+        public Transform NextSpawn()
+        {
 
-	}
+            
+            return spawns[PhotonNetwork.CurrentRoom.PlayerCount-1];
+
+        }
+
+
+        #endregion
+
+    }
 
 }

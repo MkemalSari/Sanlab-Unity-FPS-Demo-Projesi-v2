@@ -192,6 +192,7 @@
     <Compile Include="Assets\Scripts\Rocket.cs" />
     <Compile Include="Assets\Scripts\RocketLauncher.cs" />
     <Compile Include="Assets\Scripts\ShotGun.cs" />
+    <Compile Include="Assets\Scripts\SpawnManager.cs" />
     <Compile Include="Assets\Scripts\TankController.cs" />
     <Compile Include="Assets\Scripts\TurretsController.cs" />
     <Compile Include="Assets\Scripts\UIControl.cs" />

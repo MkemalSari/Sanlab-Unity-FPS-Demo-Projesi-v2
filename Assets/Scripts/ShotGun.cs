@@ -30,17 +30,17 @@ public class ShotGun :Guns
     
     public void Shot()
     {
-
         if (ammoCount > 0)
         {
             ammoCount--;
             GunShotSound.Play();
             for (int i = 0; i < spreadCount; i++)
             {
-            GameObject bullet =Instantiate(bulletPrefab, burrel.transform.position, burrel.transform.rotation);
+                print(nameof(bulletPrefab));
+            GameObject bullet =PhotonNetwork.Instantiate("Ammo", burrel.transform.position, burrel.transform.rotation);
             bullet.transform.rotation = Quaternion.RotateTowards(bullet.transform.rotation, Random.rotation, spreadAngle);
             bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * (bulletVelocity+Random.Range(0,150)));
-            Destroy(bullet, 5f);
+            
             }
         }
 
